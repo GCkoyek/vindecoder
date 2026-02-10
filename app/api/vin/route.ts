@@ -1,12 +1,15 @@
-import { NextRequest, NextResponse } from 'next/server'
-import { decodeVin } from '@/app/lib/vin/decoder'
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const vin = searchParams.get("vin");
 
-export async function POST(req: NextRequest) {
-  try {
-    const { vin } = await req.json()
-    const result = decodeVin(vin)
-    return NextResponse.json(result)
-  } catch (e: any) {
-    return NextResponse.json({ error: e.message }, { status: 400 })
+  if (!vin) {
+    return Response.json({ error: "VIN is required" }, { status: 400 });
   }
+
+  const url = `https://vpic.nhtsa.dot.gov/api/vehicles/DecodeVinExtended/${vin}?format=json`;
+
+  const res = await fetch(url);
+  const data = await res.json();
+
+  return Response.json(data);
 }

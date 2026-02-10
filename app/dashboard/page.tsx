@@ -1,54 +1,48 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import { DecodeResult } from '@/app/types/vin'
+import { useState } from "react";
 
-export default function Page() {
-  const [vin, setVin] = useState('')
-  const [result, setResult] = useState<DecodeResult | null>(null)
-  const [error, setError] = useState('')
+interface ResultItem {
+  Variable: string;
+  Value: string;
+}
 
-  async function handleDecode() {
-    setError('')
-    setResult(null)
+export default function VinDecoder() {
+  const [vin, setVin] = useState("");
+  const [result, setResult] = useState<ResultItem[] | null>(null);
 
-    const res = await fetch('/api/vin', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ vin }),
-    })
+  const decode = async () => {
+    const res = await fetch(`/api/vin?vin=${vin}`);
+    const json = await res.json();
 
-    const data = await res.json()
-    if (!res.ok) {
-      setError(data.error)
-      return
-    }
-
-    setResult(data)
-  }
+    setResult(json.Results);
+  };
 
   return (
-    <main style={{ padding: 40 }}>
-      <h1>Volvo VIN Decoder</h1>
+    <div>
+      <h1>VIN Decoder</h1>
 
       <input
         value={vin}
-        onChange={(e) => setVin(e.target.value.toUpperCase())}
+        onChange={(e) => setVin(e.target.value)}
         placeholder="Wpisz VIN"
-        style={{ padding: 10, width: 300 }}
       />
 
-      <br /><br />
-
-      <button onClick={handleDecode}>Dekoduj</button>
-
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+      <button onClick={decode}>Decode</button>
 
       {result && (
-        <pre style={{ marginTop: 20 }}>
-{JSON.stringify(result, null, 2)}
-        </pre>
+        <div style={{ marginTop: "20px" }}>
+          <h2>Wynik:</h2>
+
+          <p><strong>Marka:</strong> {result.find(x => x.Variable === "Make")?.Value}</p>
+          <p><strong>Model:</strong> {result.find(x => x.Variable === "Model")?.Value}</p>
+          <p><strong>Rok:</strong> {result.find(x => x.Variable === "Model Year")?.Value}</p>
+          <p><strong>Pojemność:</strong> {result.find(x => x.Variable === "Displacement (L)")?.Value} L</p>
+          <p><strong>Cylindry:</strong> {result.find(x => x.Variable === "Engine Number of Cylinders")?.Value}</p>
+          <p><strong>Producent:</strong> {result.find(x => x.Variable === "Manufacturer Name")?.Value}</p>
+          <p><strong>Fabryka:</strong> {result.find(x => x.Variable === "Plant City")?.Value}</p>
+        </div>
       )}
-    </main>
-  )
+    </div>
+  );
 }
