@@ -1,13 +1,12 @@
+import { NextRequest, NextResponse } from 'next/server'
 import { decodeVin } from '@/app/lib/vin/decoder'
-import { isValidVin } from '@/app/lib/vin/validator'
 
-export async function POST(req: Request) {
-  const { vin } = await req.json()
-
-  if (!vin || !isValidVin(vin)) {
-    return Response.json({ error: 'Nieprawidłowy VIN' }, { status: 400 })
+export async function POST(req: NextRequest) {
+  try {
+    const { vin } = await req.json()
+    const result = decodeVin(vin)
+    return NextResponse.json(result)
+  } catch (e: any) {
+    return NextResponse.json({ error: e.message }, { status: 400 })
   }
-
-  const result = decodeVin(vin.toUpperCase())
-  return Response.json(result)
 }

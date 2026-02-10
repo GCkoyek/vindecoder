@@ -9,10 +9,14 @@ export interface ParsedVin {
 
 export interface DecodeResult {
   brand: string
-  model: string | null
+  vin: string
   year: number | null
+  model: string | null
   engine: string | null
   plant: string | null
-  vin: string
   warning?: string
+
+  // nowo dodane
+  engineCode?: string | null
+  engineCapacity?: string | null
 }
