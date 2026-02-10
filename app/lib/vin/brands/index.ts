@@ -1,0 +1,1 @@
+export { decodeVolvo } from './volvo'
