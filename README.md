@@ -1,36 +1,39 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# VIN Decoder – aplikacja webowa
 
-## Getting Started
+Aplikacja umożliwia dekodowanie numerów VIN i prezentowanie danych pojazdu w czytelnej formie. Projekt został zbudowany w oparciu o Next.js oraz TypeScript, z wykorzystaniem zewnętrznego API do pobierania informacji o pojeździe. Logowanie i autentykacja użytkowników realizowane są za pomocą Google OAuth 2.
 
-First, run the development server:
+## Funkcjonalność
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- dekodowanie numerów VIN przy użyciu zewnętrznego API  
+- logowanie i autoryzacja użytkowników przez Google OAuth 2  
+- prezentacja danych pojazdu w przejrzystym interfejsie  
+- obsługa błędów i walidacja numeru VIN  
+- architektura oparta na Next.js i TypeScript
+
+## Technologie
+
+- Next.js  
+- TypeScript  
+- Google OAuth 2  
+- REST API do dekodowania VIN  
+
+
+## Uruchamianie projektu
+
+1. Zainstaluj zależności:
+
+```
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Uruchom środowisko deweloperskie:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+3. Skonfiguruj zmienne środowiskowe, w tym klucze OAuth i adres API VIN.
 
-## Learn More
+## Możliwości rozbudowy
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Projekt można rozszerzyć o historię wyszukiwań, zapisywanie wyników, dodatkowe źródła danych, panel użytkownika lub integrację z innymi usługami motoryzacyjnymi.
